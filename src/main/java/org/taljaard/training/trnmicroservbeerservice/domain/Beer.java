@@ -1,5 +1,6 @@
 package org.taljaard.training.trnmicroservbeerservice.domain;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -47,6 +48,8 @@ public class Beer {
 
     @Column(unique = true)
     private Long upc;
+
+    private BigDecimal price;
 
     private Integer minOnHand;
     private Integer quantityToBrew;
