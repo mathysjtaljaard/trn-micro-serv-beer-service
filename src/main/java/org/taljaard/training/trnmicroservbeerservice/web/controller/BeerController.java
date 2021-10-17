@@ -2,6 +2,8 @@ package org.taljaard.training.trnmicroservbeerservice.web.controller;
 
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class BeerController {
     }
 
     @PostMapping
-    public ResponseEntity createNewBeer(@RequestBody BeerDto newBeer) {
+    public ResponseEntity createNewBeer(@Valid @RequestBody BeerDto newBeer) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.LOCATION, String.format("%s/%s", REQUEST_MAPPING_PATH, UUID.randomUUID()));
@@ -34,7 +36,7 @@ public class BeerController {
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity updateBeerById(@PathVariable UUID beerId, @RequestBody BeerDto beertoUpdate) {
+    public ResponseEntity updateBeerById(@PathVariable UUID beerId, @Valid @RequestBody BeerDto beertoUpdate) {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
