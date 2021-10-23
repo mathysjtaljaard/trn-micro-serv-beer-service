@@ -3,9 +3,9 @@ package org.taljaard.training.trnmicroservbeerservice.web.controller;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,27 +31,26 @@ public class BeerControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void getBeerById() throws Exception {
-        UUID beerId = createBeer();
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/v1/beer/" + beerId.toString()).accept(MediaType.APPLICATION_JSON))
-                .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
     public void createNewBeer() throws Exception {
         createBeer();
     }
 
     @Test
+    public void getBeerById() throws Exception {
+
+        ;
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/beer/" + createBeer()).accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
     public void updateBeerById() throws Exception {
 
-        UUID beerId = createBeer();
         BeerDto beerDto = getBeer();
         beerDto.setBeerName("Funky Monkey");
         String beerJson = objectMapper.writeValueAsString(beerDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/beer/" + beerId.toString())
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/beer/" + createBeer())
                 .contentType(MediaType.APPLICATION_JSON).content(beerJson)).andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
@@ -71,7 +70,7 @@ public class BeerControllerTest {
     }
 
     private BeerDto getBeer() {
-        return BeerDto.builder().beerName("Funny Cat").beerStyles(BeerStyleEnum.ALE).upc(12345L)
-                .price(new BigDecimal("12.22")).build();
+        return BeerDto.builder().beerName("Funny Cat").beerStyles(BeerStyleEnum.ALE)
+                .upc(StringUtils.substring(UUID.randomUUID().toString(), 0, 14)).price(new BigDecimal("12.22")).build();
     }
 }
