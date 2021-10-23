@@ -7,7 +7,7 @@ import org.taljaard.training.trnmicroservbeerservice.web.model.BeerDto;
 @Mapper(uses = { DateMapper.class })
 public interface BeerMapper {
 
-    BeerDto beerDtoToBeer(Beer beer);
+    BeerDto beerToBeerDto(Beer beer);
 
-    Beer beerToBeerDto(BeerDto beerDto);
+    Beer beerDtoToBeer(BeerDto beerDto);
 }

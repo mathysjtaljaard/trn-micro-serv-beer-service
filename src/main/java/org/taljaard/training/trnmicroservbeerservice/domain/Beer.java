@@ -13,6 +13,7 @@ import javax.persistence.Version;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.taljaard.training.trnmicroservbeerservice.web.model.BeerDto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -53,4 +54,11 @@ public class Beer {
 
     private Integer minOnHand;
     private Integer quantityToBrew;
+
+    public void updater(BeerDto beerDto) {
+        this.beerName = beerDto.getBeerName();
+        this.beerStyle = beerDto.getBeerStyles().name();
+        this.price = beerDto.getPrice();
+        this.upc = beerDto.getUpc();
+    }
 }
