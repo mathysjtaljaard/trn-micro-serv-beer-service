@@ -2,6 +2,7 @@ package org.taljaard.training.trnmicroservbeerservice.web.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
@@ -9,7 +10,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,14 +34,16 @@ public class BeerDto {
     private Integer version;
 
     @Null
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssz", shape = Shape.STRING)
     private OffsetDateTime createdDate;
 
     @Null
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssz", shape = Shape.STRING)
     private OffsetDateTime updateDate;
 
     @NotBlank
     private String beerName;
-    
+
     @NotNull
     private BeerStyleEnum beerStyles;
 
@@ -46,6 +51,7 @@ public class BeerDto {
     @NotNull
     private Long upc;
 
+    @JsonFormat(shape = Shape.STRING)
     @Positive
     @NotNull
     private BigDecimal price;
